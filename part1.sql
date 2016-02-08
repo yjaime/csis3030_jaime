@@ -1,0 +1,8 @@
+INSERT INTO categories (category_name)
+VALUES ('Lipstick','Liquid to Matte');
+
+INSERT INTO products (category_id,product_name,price,quanity_remaining,description,image)
+VALUES ('1','Lipstick / MAC Ellie Goulding','18.00','5','A lipstick that features two new hues in a Cremesheen finish.Formulated to shade, define and showcase the lips. Two new hues in a Cremesheen texture. Special packaging features Ellie’s triangular logo debossed into the lipstick bullet and emblazoned on the tube in a striking rose gold.','mac_onlyyou.jpeg')
+('1','MAC Lipstick','17.00','10','A lipstick with hundreds of hues. The iconic product that made M·A·C famous.Formulated to shade, define and showcase the lips. Hundreds of hues, high-fashion textures. The iconic product that made M·A·C famous.','mac_dubonnet.jpeg');
+('2','Jeffrey Star Cosmetics / Breakfast at Tiffanys','18.00','4','This jewel-toned blue-green dream is super bright and screams "HIIII can you see me??" Pair this with a smokey eye and you are set. Our liquid lipstick goes on opaque, dries completely matte and stays on for hours! This product is 100% vegan & cruelty-free! (tips before use exfoliate with lip scrub then apply to bare lips! avoid food with oil… and no making out, kisses are ok!)','jsc_tiffanyblue.jpeg')
+('2','Jeffrey Star Cosmetics / Masochist’,'18.00',’8', The color of crushed berries on ice. This dark pink matte lipstick is cool toned and extremely addictive. Our liquid lipstick goes on opaque, dries completely matte and stays on for hours! This product is 100% vegan & cruelty-free! (tips before use: exfoliate then apply to bare lips! avoid food with oil… and no making out, kisses are ok!)','jsc_tiffanyblue.jpeg')
