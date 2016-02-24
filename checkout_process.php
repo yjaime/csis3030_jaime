@@ -1,6 +1,12 @@
+
 <?php
 
 include("global.php");
+include ("jwu_mail.php");
+include("header.php");
+?>
+
+<?php
 
 $first_name = mysqli_real_escape_string($connection,$_POST["first_name"]);
 $last_name = mysqli_real_escape_string($connection,$_POST["last_name"]);
@@ -8,6 +14,7 @@ $address = mysqli_real_escape_string($connection,$_POST["address"]);
 $city = mysqli_real_escape_string($connection,$_POST["city"]);
 $state = mysqli_real_escape_string($connection,$_POST["state"]);
 $zip = mysqli_real_escape_string($connection,$_POST["zip"]);
+
 $id = intval($_POST["id"]);
 
 if ($first_name == "") {
@@ -39,14 +46,39 @@ if ($errormessage != "") { //if errormessage has a value
 	die();
 }
 
-echo "Hello, your order has been placed. Details are shown below" . "<br />";
+?>
+
+
+<?php
+
+$to = "tld271@jwu.edu";
+$subject = "Order";
+$message = "Thank you for placing your order \n\n";
+
+
+$message = $message . "First Name: ";
+$message = $message . $_POST ["first_name"] . "\n\n";
+$message = $message . "Last Name: ";
+$message = $message . $_POST ["last_name"] . "\n\n";
+$message = $message . "Address: ";
+$message = $message . $_POST ["address"] . "\n\n";
+$message = $message . "City: ";
+$message = $message . $_POST ["city"] . "\n\n";
+$message = $message . "State: ";
+$message = $message . $_POST ["state"] . "\n\n";
+$message = $message . "Zip: ";
+$message = $message . $_POST ["zip"] . "\n\n";
+
+
+echo "View your order below!";
+	echo "<br />";
 	echo "<br />";
 
-echo "First name: ";
+echo "First Name: ";
 	echo $_POST["first_name"] . "<br />";
 	echo "<br />";
 
-echo "Last name: ";
+echo "Last Name: ";
 	echo $_POST["last_name"] . "<br />";
 	echo "<br />";
 
@@ -62,66 +94,29 @@ echo "State: ";
 	echo $_POST["state"] . "<br />";
 	echo "<br />";
 
-echo "Zip: ";
+echo "Zip Code: ";
 	echo $_POST["zip"] . "<br />";
 	echo "<br />";
 
-$result = mysqli_query($connection,"select * from cart join products on (cart.product_id = product.id) where session_id = '" . session_id() . "' order by product_id");
+$result = mysqli_query($connection,"select * from cart join products on (cart.product_id = product.id) 
+	where session_id = '" . session_id() . "' order by product_id");
 
-mysqli_query($connection,"update products left join cart on products.id = cart.products_id set products.quantity_remaining = (products.quantity_remaining - where product.id = product_id");
 
 while ($row = mysqli_fetch_assoc($result)) {
-	
-	echo $row["product_name"] . "<br />";
-    echo $row["quanity"] . "<br />";
-    echo "<br />";
-
+		mysqli_query($connection,"update products set quantity_remaining = quantity_remaining - quantity where id = product_id");
+		echo $row["product_name"] . "<br />";
+		echo $row["quantity"] . "<br />";
+		echo "<br />";
+		$message = $message . "Product Name";
+		$message = $message . $_POST ["product_name"] . "\n\n";
+		$message = $message . "Quantity";
+		$message = $message . $_POST ["quantity"] . "\n\n";
 }
 
-include("header.php");
+jwu_mail($to,$subject,$message);
 
 ?>
 
-		All saved!
-
-<?php
-
-if (!defined("G_JWU_MAIL")) {
-
-define("G_JWU_MAIL",1);
-
-function jwu_mail($to,$subject,$message) {
-    $curl = curl_init('http://tageninformatics.com/client/jwu/email/');
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_POST, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-        'to' => $to,
-        'subject' => $subject,
-        'message' => $message
-        )
-    );
-    $curl_response = curl_exec($curl);
-
-
-    if ($curl_response === false) {
-        $info = curl_getinfo($curl);
-        curl_close($curl);
-        die('Unable to run network request. Additional info: ' . var_export($info));
-    }
-    curl_close($curl);
-    $ret = json_decode($curl_response);
-    if ($ret->success != true) {
-        echo "Unable to send email due to the following errors: \n";
-        foreach ($ret->errors as $num=>$error)
-                echo $error . ". \n";
-    }
-    return $ret->success;
-}
-
-
-}//end global define
-
-?>
 
 <?php 
 
