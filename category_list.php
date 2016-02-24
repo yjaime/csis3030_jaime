@@ -1,25 +1,18 @@
 <?php
- include("global.php");
- include("header.php");
-?>
 
-?>
-<div class= "categories"
+include("global.php");
+include("header.php");
 
-<?php
+$result = mysqli_query($connection,"select * from categories order by category_name");
 
-$id = mysqli_real_escape_string($connection,$_GET['id']);
-$result = mysqli_query($connection,"select * from categories");
-
-while($row = mysqli_fetch_array($result)) { 
-	echo "<a href='product_list.php?category_id=" . $row['id'] .  ">" . $row['category_name'] . "</a></br>";
-	echo "<a href='product_list.php?category_id=" . $row['id'] .  ">" . $row['category_name'] . "</a></br>";
+while ($row = mysqli_fetch_assoc($result)) {
+	
+	echo "<a href='product_list.php?category_id=" . $row["id"] . "'>" . "<br />";
+	echo $row["category_name"];
+	echo "</a>";
+	
 }
 
+include("footer.php");
+
 ?>
-
-</div>
-
-<?php
- include("footer.php"); 
- ?>
