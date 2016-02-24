@@ -51,9 +51,9 @@ if ($errormessage != "") { //if errormessage has a value
 
 <?php
 
-$to = "tld271@jwu.edu";
+$to = "yaj524@jwu.edu";
 $subject = "Order";
-$message = "Thank you for placing your order \n\n";
+$message = "Thank you for placing your order! \n\n";
 
 
 $message = $message . "First Name: ";
@@ -70,7 +70,7 @@ $message = $message . "Zip: ";
 $message = $message . $_POST ["zip"] . "\n\n";
 
 
-echo "View your order below!";
+echo "You can view your order below!";
 	echo "<br />";
 	echo "<br />";
 
